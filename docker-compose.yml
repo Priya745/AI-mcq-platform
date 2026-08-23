@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: mcq-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mcq_generator
+      POSTGRES_USER: mcq_user
+      POSTGRES_PASSWORD: mcq12345
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mcq-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
