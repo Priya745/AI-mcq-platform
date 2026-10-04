@@ -64,10 +64,9 @@ def generate_pdf(
         
     html_content += "</body></html>"
     
-    import weasyprint
-    
     # Generate PDF in memory using weasyprint (pure Python, doesn't need system binaries like wkhtmltopdf)
     try:
+        import weasyprint
         pdf_bytes = weasyprint.HTML(string=html_content).write_pdf()
         return Response(content=pdf_bytes, media_type="application/pdf", headers={
             "Content-Disposition": f"attachment; filename=MCQ_Report_{result.test_id}.pdf"
