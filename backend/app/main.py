@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
 from app.models import (
@@ -20,11 +21,20 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for development, you can restrict this in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # app.include_router(
 #     health_router,
 #     prefix="/api/v1"
 # )
-app.include_router(v1_router)
+app.include_router(v1_router, prefix="/api/v1")
 
 
 @app.get("/")

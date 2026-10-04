@@ -36,6 +36,12 @@ class Test(Base):
 
     score = Column(Integer, nullable=True)
 
+    correct_count = Column(Integer, nullable=True)
+
+    incorrect_count = Column(Integer, nullable=True)
+
+    unanswered_count = Column(Integer, nullable=True)
+
     status = Column(
         String(20),
         nullable=False,
