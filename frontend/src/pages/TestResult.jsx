@@ -27,7 +27,8 @@ function TestResult() {
   const handleDownloadPDF = async () => {
     try {
       const response = await api.post('/pdf/generate', result, { responseType: 'blob' });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const contentType = response.headers['content-type'];
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: contentType }));
       const link = document.createElement('a');
       link.href = url;
       
@@ -67,7 +68,7 @@ function TestResult() {
         </div>
         <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
           <button className="btn" onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
-          <button className="btn" style={{ background: '#3b82f6' }} onClick={handleDownloadPDF}>Download PDF Report</button>
+          <button className="btn" style={{ background: '#3b82f6' }} onClick={handleDownloadPDF}>Download Report</button>
         </div>
       </div>
 
